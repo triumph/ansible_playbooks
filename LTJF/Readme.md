@@ -1,7 +1,7 @@
 # ansible_Update_LTJF
 ### 简介
 本库为快速使用ansible部署LTJF项目
-### 克隆库
+### 运行
 ```
 ansible-playbook /root/ansible_playbooks/LTJF/update.yml -e "services_name=account services_version=12345" --syntax-check
 ansible-playbook /root/ansible_playbooks/LTJF/update.yml -e "services_name=account services_version=12345" 
