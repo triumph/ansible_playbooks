@@ -1,0 +1,2 @@
+- name: Start Service
+  shell: supervisorctl start {{ services_name }}

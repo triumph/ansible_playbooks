@@ -1,0 +1,9 @@
+- name: Download PKG
+  get_url: url={{ down_url }}/LTJF_JAVA_unicom-{{ services_name }}/unicom-{{ services_name }}-{{ services_version }}.jar dest=/services/srv/unicom-{{ services_name }}_srv/unicom-{{ services_name }}-{{ services_version }}.jar  mode=0644
+- name: Stop  Service
+  shell: supervisorctl stop {{ services_name }}
+- name: Delete ln file
+  file: path=/services/srv/unicom-{{ services_name }}_srv/unicom-{{ services_name }}-last.jar  state=absent
+- name: Create ln file
+  file: src=/services/srv/unicom-{{ services_name }}_srv/unicom-{{ services_name }}-{{ services_version }}.jar dest=/services/srv/unicom-{{ services_name }}_srv/unicom-{{ services_name }}-last.jar state=link
+  notify: Start Service

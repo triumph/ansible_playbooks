@@ -1,0 +1,5 @@
+down_url: http://10.171.216.74:8180/pkg
+nginx_user: nginx
+nginx_port: 80
+nginx_basedir: /usr/local/nginx
+
