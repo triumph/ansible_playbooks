@@ -19,45 +19,7 @@ Ansible-roles/
 
 #### 执行playbook
 ```
-[root@squid Ansible-roles]# ansible-playbook supervisor.yml 
+[root@squid Ansible-roles]# ansible-playbook install.yml  --tags "install_supervisor"
+[root@squid Ansible-roles]# ansible-playbook addservice.yml --tags "supervisor_add_tomcat-8001-boss"
 
-PLAY [install supervisor] **************************************************
 
-TASK [supervisor : script] *************************************************
-changed: [10.241.0.10]
-changed: [10.241.0.11]
-
-TASK [supervisor : debug] **************************************************
-ok: [10.241.0.10] => {
-    "msg": [
-        "url: 10.241.0.10:9001", 
-        "username: admin ", 
-        "password: baiyongjie"
-    ]
-}
-ok: [10.241.0.11] => {
-    "msg": [
-        "url: 10.241.0.11:9001", 
-        "username: admin ", 
-        "password: baiyongjie"
-    ]
-}
-
-PLAY RECAP *****************************************************************
-10.241.0.10                : ok=2    changed=1    unreachable=0    failed=0
-10.241.0.11                : ok=2    changed=1    unreachable=0    failed=0
-
-#执行tags,会失败是因为已经安装过了
-[root@squid Ansible-roles]# ansible-playbook supervisor.yml --tags "install_supervisor"
-
-PLAY [install supervisor] ************************************************************************************************************************
-
-TASK [supervisor : script] ***********************************************************************************************************************
-fatal: [10.241.0.10]: FAILED! => {"changed": true, "msg": "non-zero return code", "rc": 10, "stderr": "Shared connection to 10.241.0.10 closed.\r\n", "stderr_lines": ["Shared connection to 10.241.0.10 closed."], "stdout": "9001 port is used ...\r\nscript exit\r\n", "stdout_lines": ["9001 port is used ...", "script exit"]}
-fatal: [10.241.0.11]: FAILED! => {"changed": true, "msg": "non-zero return code", "rc": 10, "stderr": "Shared connection to 10.241.0.11 closed.\r\n", "stderr_lines": ["Shared connection to 10.241.0.11 closed."], "stdout": "9001 port is used ...\r\nscript exit\r\n", "stdout_lines": ["9001 port is used ...", "script exit"]}
-        to retry, use: --limit @/data/Ansible-roles/supervisor.retry
-
-PLAY RECAP ***************************************************************************************************************************************
-10.241.0.10                : ok=0    changed=0    unreachable=0    failed=1
-10.241.0.11                : ok=0    changed=0    unreachable=0    failed=1
-```
