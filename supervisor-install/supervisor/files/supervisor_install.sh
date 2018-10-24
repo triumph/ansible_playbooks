@@ -5,7 +5,7 @@
 #supervisor env
 port=9001
 username=admin
-password=baiyongjie
+password=Fabao123
 configdir=/etc/supervisor
 
 #Get system env
@@ -15,10 +15,10 @@ source /etc/profile
 OSVERSION=`sed -r "s/.*[ ]([0-9])(.*)/\1/"  /etc/redhat-release`
 if [ $OSVERSION -eq 6 ]
 then
-  LOCALIP=`ifconfig  | grep "inet addr:" | grep -v '127.0.0.1' | sed 's/^.*addr:\(.*\)  Bc.*$/\1/g' | tail -1 |awk '{print $1}'`
+  LOCALIP=`ifconfig  | grep "inet addr:" | grep -v '127.0.0.1' | sed 's/^.*addr:\(.*\)  Bc.*$/\1/g' | head -n 1 |awk '{print $1}'`
 elif [ $OSVERSION -eq 7 ]
 then
-  LOCALIP=`ifconfig | grep inet | grep -Ev "inet6|127.0.0.1" | sed 's/^.*inet \(.*\)  ne.*$/\1/g' | tail -1`
+  LOCALIP=`ifconfig | grep inet | grep -Ev "inet6|127.0.0.1" | sed 's/^.*inet \(.*\)  ne.*$/\1/g' | head -n 1`
 fi
 
 #check 9001 port available or not 
@@ -39,6 +39,7 @@ if [ ! -d $configdir ]
 then
   mkdir -p $configdir/conf.d 
   echo_supervisord_conf > $configdir/supervisord.conf
+  sed -i "s/1024/65536/g" $configdir/supervisord.conf
   cat >> $configdir/supervisord.conf << EOF
 [include]
 files = ./conf.d/*.ini
