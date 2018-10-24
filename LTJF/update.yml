@@ -2,6 +2,7 @@
 - hosts: LFJFservers
   remote_user: root
   gather_facts: False
+  serial: 1
   roles:
     - update
 
