@@ -1,0 +1,13 @@
+---
+- script: supervisor_install.sh
+  register: supervisor_install_out
+  ignore_errors: True
+  tags: supervisor_install
+  
+- debug: msg={{supervisor_install_out.stdout_lines}}
+  tags: supervisor_install_out
+
+- name: Add supervisor service
+  copy: src=supervisord_tomcat-8001-boss.conf  dest=/etc/supervisor/conf.d/supervisord_tomcat-8001-boss.conf  mode=0644
+  notify: Update supervisor service
+  tags: supervisor_add_tomcat-8001-boss
